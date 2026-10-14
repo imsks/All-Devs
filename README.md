@@ -20,7 +20,10 @@ Last updated: 2026-10-15.
 - Every idea accepts build requests from any locality. There is no creator-selectable local-only mode; creators still approve membership.
 - At launch, GitHub sign-in is required to post ideas or send build requests. There are no minimum commits, followers, or repository requirements; selected work evidence is optional.
 - Anyone can read published ideas and their public discussion without signing in. Commenting requires GitHub sign-in, not circle membership.
-- Accepted collaborators coordinate through built-in real-time circle chat. The user wants to avoid paid services; zero-cost operation is a design constraint, not a verified capacity claim.
+- Beta is free to users, including built-in real-time circle chat. No beta subscriptions, checkout, or charges. Circles can coordinate externally instead if they prefer.
+- Premium means an optional future paid allowance for more swipes, not paying for chat, circle membership, or a sponsored circle. Exact allowances, pricing, and post-beta rollout remain open.
+- The beta swipe allowance counts newly created build requests only, whether sent by right swipe or an equivalent forum action. Browsing and left-swipe skips do not consume it; numeric limits and reset rules remain open.
+- The pilot has a hard USD 0 infrastructure-spend cap: proactively limit usage and throttle or pause chat rather than incur charges. Free beta does not mean unlimited usage or verified free capacity; any later revenue does not authorize paid infrastructure upgrades.
 
 ## Decision Status
 
@@ -39,11 +42,14 @@ The confirmed brief and explicitly confirmed answers below are agreed. Everythin
 | Right-swipe outcome and circle membership | Creator-reviewed build request; acceptance grants circle membership, not the swipe itself |
 | Sign-in for posting and build requests | GitHub required at launch; no activity thresholds; optional work evidence |
 | Reading and commenting access | Published ideas and public discussion are readable without sign-in; GitHub sign-in is required to comment, not circle membership |
-| Private circle coordination | Built-in real-time group chat selected; private to the circle, not an external-only workspace or asynchronous-only thread |
+| Private circle coordination | Built-in real-time group chat, free in beta and not premium-gated; external coordination is also supported |
+| Beta pricing | Free; no checkout, subscriptions, or charges during beta |
+| Beta swipe counting | Newly created build requests only; idea views and left-swipe skips do not count. Numeric allowance and reset rules remain open |
+| Future premium model | Optional paid allowance for more swipes after beta; no chat or circle subscription. Allowance semantics, price, packaging, and timing remain open |
 | Meaning of an open developer directory | Open; public source data does not imply permission for unrestricted reuse |
 | MVP scope, exclusions, and launch cohort | Open |
 | Permissions, consent, retention, and deletion policy | Open; launch gate |
-| Budget, time commitment, and deadline | Avoid paid services; no paid provisioning authorized. Quota-exhaustion behavior, launch workload, time commitment, and deadline remain open |
+| Budget, time commitment, and deadline | Hard USD 0 pilot infrastructure spend; throttle or pause before free quotas are exhausted. No paid provisioning authorized; workload, time commitment, and deadline remain open |
 | Stack and infrastructure services | Proposed only |
 | Implementation and publication to an issue tracker | Not authorized at this stage |
 
@@ -94,7 +100,9 @@ A public idea forum, swipe discovery, and built-in real-time circle chat are now
 - Every idea accepts build requests from anywhere; creators cannot make an idea local-only. Request eligibility is not automatic acceptance or a guarantee of membership.
 - Posting ideas and sending build requests require GitHub sign-in at launch, without a minimum contribution history. GitHub-linked work evidence is optional.
 - Anyone can read published ideas and their public discussion. GitHub-signed-in developers can comment before joining a circle; commenting does not send a build request or grant membership.
-- Accepted collaborators coordinate through built-in real-time circle chat, separate from the publicly readable idea discussion.
+- Accepted collaborators can use built-in real-time circle chat, separate from public idea discussion, or coordinate through an external workspace. Chat is free in beta and is not the premium feature.
+- All beta features are free to users. Future premium provides more swipes, not chat access or circle membership, and never bypasses creator approval or moderation.
+- Only newly created build requests consume the beta swipe allowance, across swipe and equivalent forum actions. Browsing and left-swipe skips do not count; the creator need not accept a request for it to count.
 - Build-request visibility, moderation and safety restrictions, search-engine indexing, detailed circle lifecycle rules, and access to chat history after membership changes remain unresolved.
 - A left swipe is a skip, not a confirmed public downvote; its persistence is unresolved.
 - The forum and swipe view using the same underlying idea posts is a recommendation, not an approved implementation decision.
@@ -113,7 +121,7 @@ A public idea forum, swipe discovery, and built-in real-time circle chat are now
 
 Post an idea with city or metro context -> discover ideas local-first, with remote collaboration supported -> send a build request -> creator accepts -> join the circle -> take a first concrete building step.
 
-Posting, public reading, GitHub-signed-in public commenting, right-swipe build requests, creator-approved membership, left-swipe skip, and real-time circle chat are agreed interactions. Request withdrawal, expiry, team capacity, chat scope and retention, progress tracking, and the first-step milestone still need decisions.
+Posting, public reading, GitHub-signed-in public commenting, right-swipe build requests, creator-approved membership, left-swipe skip, real-time circle chat, and external coordination are agreed directions. Beta is free, and its swipe allowance counts newly created build requests only; optional paid extra swipes are a future direction. Request withdrawal, expiry, team capacity, numeric allowance, reset and refund rules, retention, progress tracking, and the first-step milestone still need decisions.
 
 **Product hypothesis:** Idea-first discovery can help local developers turn shared interests into an actual collaboration. Test this by tracking mutually agreed first working sessions or other explicitly chosen building outcomes, rather than swipe volume alone.
 
@@ -191,7 +199,8 @@ With Build Circles selected, first-party ideas, discovery actions, and collabora
 | Abuse controls | Turnstile and application-level limits | Protect onboarding and introductions; not a replacement for authorization or moderation |
 | Frontend | Cloudflare static assets / Workers or Vercel | Cloudflare can host the frontend too; Vercel is reasonable if framework ergonomics justify another platform |
 | Semantic retrieval | Workers AI and Vectorize, later | Only after a keyword/filter baseline shows a measured need and data-use review permits it |
-| Real-time circle chat | SQLite-backed Durable Objects with WebSocket Hibernation | Recommended candidate now that real-time chat is selected; a room per circle isolates coordination, but quotas, membership authorization, history storage, and recovery must be validated |
+| Real-time circle chat | SQLite-backed Durable Objects with WebSocket Hibernation | Recommended candidate; validate quotas, membership authorization, history storage, and recovery before claiming capacity. No subscription check for chat |
+| Swipe usage and abuse controls | Server-side counters and limits, design undecided | Keep usage safeguards separate from membership. Any allowance must apply to the action across swipe and forum interfaces, not just a gesture; no billing system in beta |
 
 Proposed ingestion flow: approved profile or curated project -> lightweight identity discovery -> durable bounded task -> permitted enrichment -> normalized source-linked evidence -> derived search views -> cached public response.
 
@@ -201,9 +210,9 @@ Do not expose GitHub tokens in browser code, public logs, documentation, or queu
 
 ### Real-Time Chat and Zero-Cost Target
 
-**Confirmed product decision:** Built-in real-time circle chat, rather than an asynchronous-only thread or external-only workspace. This selects the experience, not a vendor, an unlimited traffic guarantee, or the full chat feature set.
+**Confirmed product decision:** Built-in real-time circle chat, free in beta and not premium-gated, with external coordination available as an alternative. An asynchronous-only built-in experience was not selected. This selects the product direction, not a vendor, an unlimited traffic guarantee, or the full chat feature set.
 
-**Cost constraint:** The user wants to avoid paying for services. Do not enable a paid plan, assume overages are acceptable, or use temporary credits as evidence of sustainable zero-cost operation. A free-tier pilot is plausible, not yet validated. Quota exhaustion, traffic spikes, abuse, and growing message history must have an explicit operating policy.
+**Confirmed pilot constraint:** Hard USD 0 infrastructure spend and no charges to beta users. Proactively limit usage and throttle or pause chat before quotas are exhausted, rather than incur charges. Do not enable a paid plan, assume overages are acceptable, or use temporary credits as evidence of sustainable zero-cost operation. A bounded free-tier pilot is plausible, not yet validated. Usage limits, safety margins, notification, recovery, abuse controls, and history retention still need concrete policies. Any future revenue does not automatically authorize a paid plan.
 
 Official documentation checked on 2026-10-15:
 
@@ -219,7 +228,7 @@ Proposed Cloudflare-first design, not approved implementation:
 - Use one SQLite-backed Durable Object per circle for real-time room coordination and, if selected, durable chat history. Do not duplicate every message into another database without a real need.
 - Use the Hibernation WebSocket API so idle rooms can keep connections without remaining active. Timers, pending work, and ordinary non-hibernating sockets can defeat this saving; hibernation does not make active message handling or storage free.
 - The documented 20:1 incoming-WebSocket-message ratio applies to request billing, not SQL writes, runtime limits, or guaranteed message capacity. Outgoing frames have no DO request charge, but fan-out still consumes work and must be bounded.
-- Check membership server-side for connections, message operations, and history access. Design revocation for already-connected members, session expiry, room deletion, and administrative moderation; admission checks alone are insufficient.
+- Check membership server-side for connections, message operations, and history access. Design revocation for already-connected members, session expiry, room deletion, and administrative moderation; admission checks alone are insufficient. Chat access must not depend on a paid swipe allowance.
 - Define message IDs, persistence acknowledgments, deduplication, bounded history pagination, reconnect catch-up, and backpressure. Deployments can disconnect sockets; do not claim exactly-once delivery or uninterrupted connections.
 - Recommend text-first chat with bounded message sizes, rate limits, active connections, room sizes, and history retention. Attachments, presence, typing indicators, read receipts, DMs, voice/video, and push notifications remain unapproved and need separate cost estimates.
 - Do not split across providers just to accumulate free quotas. Cross-provider latency, credentials, egress, consistency, and operations may cost more than the apparent savings. Follow provider terms rather than rotating accounts or evading limits.
@@ -227,6 +236,21 @@ Proposed Cloudflare-first design, not approved implementation:
 **Illustrative sizing, not a supported workload:** 500 daily active users sending 20 messages each means 10,000 new messages/day. At three stored-row writes per message including indexes, this alone would use roughly 30,000 writes/day, before other writes. At 1 KB per stored message, 30 days is roughly 300 MB of raw messages before indexes, metadata, edits, or backups. Connection churn, history reads, active room duration, fan-out, and abuse can exhaust a different allowance first. No concurrency or free-capacity claim is established by this arithmetic.
 
 Before choosing a provider, agree on daily active users, simultaneous connections, concurrently active circles, messages/day and peak rate, average message size, recipient fan-out, history reads, retention, and allowed interruption. Then compare measured usage against every relevant allowance with headroom.
+
+### Free Beta and Future Premium
+
+**Confirmed correction:** Beta runs free to users. Premium means optional paid extra swipes after beta, not paid Circle Chat, a circle subscription, sponsorship, or requiring teammates to subscribe. The earlier chat-paywall interpretation and payer question are withdrawn.
+
+- Beta has no checkout, subscriptions, payment collection, payment-provider integration, or paywall. Built-in chat remains available to authorized circle participants within operational limits; an upgrade must not be offered as the way around a beta safety limit.
+- Free does not mean unlimited. Abuse prevention, usage safeguards, bounded storage, and the hard-zero throttle/pause policy still apply. A beta build-request allowance is selected; numeric limits, reset timing, unused-allowance rollover, and refunds after withdrawal or rejection remain undecided.
+- Confirmed: count only newly created build requests, whether initiated by right swipe or an equivalent forum action. Idea views and left-swipe skips consume no allowance. A request counts when created, not when the creator accepts it; retrying the same request must not count again, and a failed creation consumes no unit.
+- Future premium should provide more opportunities to express build interest, not guaranteed matches, automatic acceptance, ranking boosts, access to private circles, or permission to spam. More swipes must remain subject to abuse controls and finite capacity.
+- Exact future pricing, payment packaging, allowances, eligibility, and the date or criteria for leaving beta are open. Do not build or launch billing before a later explicit decision.
+- Circle membership, chat access, and remaining swipe allowance are separate concepts. Running out of swipes must not revoke an existing circle membership or turn chat into a paid feature.
+- External coordination remains an option, not a paid-chat escape hatch. Third-party services have their own costs, access controls, and terms. Recommend a creator-managed workspace link visible only to accepted collaborators; link visibility and invitation management remain open.
+- Define chat history retention, reading/export, member departure/removal, and moderation independently of monetization. AllDevs cannot revoke copied external invites or remove users from third-party workspaces without an approved integration.
+- Revisit unit economics, payment fees, taxes, disputes, refunds, and provider availability only when post-beta monetization is authorized. Future revenue does not authorize infrastructure charges or prove positive margins.
+- No checkout, infrastructure purchase, payment processing, or development is authorized by this discussion alone.
 
 ## What Efficient Must Mean
 
@@ -243,7 +267,7 @@ Agree on measurable targets before choosing implementation tactics:
 
 **Illustrative sizing, not a forecast:** 10,000 profiles refreshed once per week would average about 1,429 profile refreshes per day. At three upstream requests per refresh, that is about 4,286 requests per day, excluding discovery, pagination, retries, and deep evidence retrieval. Measure query cost and burst limits before declaring this viable; daily averages do not establish quota compliance.
 
-**Budget target:** Avoid paid services for the pilot. Cloudflare's Workers paid-plan minimum of USD 5/month describes an optional upgrade, not a prerequisite for SQLite-backed Durable Objects on Workers Free and not an approved purchase. D1, queues, storage, AI, observability, email, domains, Vercel, and any alternative provider must be modeled separately. No all-in free-tier guarantee has been established. Set application limits and quota headroom; billing alerts are not hard spending caps. Whether to throttle or pause chat rather than pay when limits approach is the next open decision.
+**Confirmed budget rule:** Hard USD 0 infrastructure spend for the pilot and no charges to beta users, accepting throttling or temporary chat unavailability rather than infrastructure charges. Cloudflare's Workers paid-plan minimum of USD 5/month describes an optional future upgrade, not a prerequisite for SQLite-backed Durable Objects on Workers Free or an approved purchase. D1, queues, storage, AI, observability, email, domains, Vercel, and alternative providers must be modeled separately. No all-in free-tier guarantee has been established. Enforce application limits with headroom; billing alerts are not hard spending caps. Upgrades require new explicit approval, even if future revenue exists. Live billing is outside the beta scope.
 
 ## Proposed First Release
 
@@ -252,12 +276,14 @@ This is a discussion draft for the selected Build Circles direction, not an appr
 1. Read published ideas and public discussion without signing in. Sign in through GitHub to post ideas, comment, or send build requests; select a city or metro area without requiring GPS and explicitly approve profile visibility. Selected work evidence is optional; no minimum commits, followers, or existing repository are required.
 2. Post an idea to the public forum. Proposed post details include the problem, intended outcome, help wanted, and expected commitment; required fields remain open.
 3. Discover ideas local-first through forum browsing and a swipe view over the same posts; every idea accepts remote build requests. Public reading and GitHub-signed-in commenting do not require circle membership. Exact filters and reaction behavior remain open.
-4. Swipe right to send a build request, or left to skip. Provide equivalent accessible buttons; persistence, undo, and request limits remain open.
+4. Swipe right to send a build request, consuming one allowance unit only when a new request is created, or left to skip without consuming allowance. Equivalent forum requests follow the same rule; browsing also does not count. Provide equivalent accessible buttons; numeric limits, reset rules, skip persistence, and undo remain open.
 5. The creator reviews build requests and accepts collaborators into the circle. A right swipe alone grants neither membership nor contact access. Team capacity, review deadlines, withdrawal, and later membership changes remain open.
-6. Coordinate through built-in private real-time circle chat, agree on a first concrete building step, and record whether it happened. Chat feature scope, history retention, membership-change behavior, and quota policy remain open. An existing GitHub repository is not required for posting an idea.
+6. Coordinate through free private real-time circle chat or an external workspace, agree on a first concrete building step, and record whether it happened. Chat scope, history retention, and membership-change behavior remain open. Apply the hard-zero throttle/pause policy to beta without offering a paid bypass. An existing GitHub repository is not required for posting an idea.
 7. Manage idea and profile visibility, report content, block abuse, and request deletion under a defined retention policy.
 
-Proposed exclusions: a global census, a universal developer score, recruiter data exports, private-repository ingestion, dating, a general-purpose social feed unrelated to ideas, unrelated direct messaging, voice/video calls, payments, and an autonomous AI matching agent. The public idea forum and real-time circle chat are selected features, not exclusions. Attachments and other chat enhancements remain unapproved.
+Confirmed beta exclusions: checkout, subscriptions, payment collection, and premium paywalls. Future paid extra swipes are a post-beta direction, not a beta implementation requirement.
+
+Other proposed exclusions: a global census, a universal developer score, recruiter data exports, private-repository ingestion, dating, a general-purpose social feed unrelated to ideas, unrelated direct messaging, voice/video calls, and an autonomous AI matching agent. The public idea forum, free real-time circle chat, and external coordination are selected directions, not exclusions. Attachments and other chat enhancements remain unapproved.
 
 ## Validation Before Development
 
@@ -268,6 +294,8 @@ Proposed exclusions: a global census, a universal developer score, recruiter dat
 **Technical test, only after authorization:** Compare a lightweight-discovery/enrichment pipeline with the reference collector on the same permitted cohort. Record calls, points, errors, duplicates, completeness, elapsed time, freshness, and cost. More concurrency alone is not an efficiency improvement.
 
 **Chat test, only after authorization:** Benchmark the agreed workload and bursts, not an unspecified number of users. Measure request/compute/storage usage, hibernation behavior, fan-out, reconnect recovery, duplicate sends, persistence failures, and history pagination. Test a revoked member with a live socket, unauthorized room/history access, session expiry, deploy-induced disconnects, a slow receiver, and reaching each quota. Do not report a failed persistence operation as a successfully saved message. Record both cost and availability before claiming a zero-cost capacity.
+
+**Beta access and limits test, only after authorization:** Verify authorized participants can use circle chat without payment, nonmembers cannot access it, exhausting the swipe allowance does not revoke membership or chat access, and beta has no paid bypass or checkout. Verify that a newly persisted build request consumes one unit before any creator decision, views and skips consume none, failed creation consumes none, and retries for the same request do not count twice. Test equivalent forum actions, concurrency, and the eventually agreed limit/reset/refund rules. Verify hard-zero throttling, honest failed-send states, and the chosen external-link visibility policy. Billing-specific tests are not beta requirements. There is no existing implementation or prior test suite yet.
 
 **Trust test:** Walk through a new user, a low-activity developer, a renamed account, a bot, a deletion request during an in-flight refresh, a revoked authorization, a blocked sender, and a project that becomes private. For Build Circles, also examine an idea receiving 100 interested builders, an unresponsive creator, repeated unwanted requests, a full circle, harmful public content, and a deleted idea with pending interest. Verify that a remote builder can request to join an otherwise eligible idea, that location alone does not block the request, and that only creator acceptance grants membership.
 
@@ -348,11 +376,29 @@ Commenting is distinct from sending a build request or becoming a member. Member
 
 Confirmed answer, 2026-10-15: Built-in real-time chat for accepted circle members. The asynchronous-only recommendation and external-only coordination were not selected. The user wants to avoid paid services and permits evaluating GCP, Cloudflare, MongoDB, and other options; vendor choice and traffic capacity are not finalized.
 
-The experience is selected, but free operation at arbitrary scale is not established. Provider quotas, usage measurements, bounded chat scope, retention, authorization, and operating behavior at quota exhaustion still need decisions. This answer does not authorize starting development, provisioning infrastructure, or spending money.
+The experience is selected, but free operation at arbitrary scale is not established. Provider quotas, usage measurements, bounded chat scope, retention, and authorization still need design. Q8 below establishes the quota-exhaustion policy and external option; Q9 corrects the premium model and confirms beta is free. This answer does not authorize starting development, provisioning infrastructure, or spending money.
 
 **Q8: What should happen if free-tier limits are approached or exhausted?**
 
-Unanswered. Recommendation: enforce a hard zero-spend pilot, with proactive application limits and clear throttling or temporary unavailability instead of unapproved charges. An alternative is to seek explicit approval for a small paid upgrade to preserve availability. Until the user changes the constraint, paid provisioning and overages are not authorized; alerts alone are not a spending cap.
+Confirmed answer, 2026-10-15: The user selected A for the pilot: hard USD 0 infrastructure spend, with proactive usage limits and throttling or temporary chat unavailability rather than paid upgrades. Alerts alone are not a spending cap; paid provisioning and overages remain unauthorized.
+
+The user also raised premium and external coordination. The assistant initially interpreted this as a chat subscription, but Q9 below explicitly corrects that interpretation. External coordination remains an option; premium is for future extra swipes, not chat. No revenue or subscription authorizes infrastructure spending.
+
+**Q9: What does premium mean, and can beta charge users?**
+
+Confirmed correction, 2026-10-15: Premium means paying for more swipes, like the discovery interaction in Tinder. It is not a circle subscription or a payment required from circle participants to use chat. The earlier payer question and chat-paywall proposal are withdrawn.
+
+Beta must run free to users, with no checkout, subscriptions, or payment collection. Post-beta premium extra swipes are a future direction only; pricing, packaging, numeric allowances, and rollout remain undecided. Built-in chat and external coordination remain available options, subject to membership and operational limits. The hard USD 0 pilot infrastructure cap still applies.
+
+**Q10: What should a beta swipe allowance count, if we introduce one?**
+
+Confirmed answer, 2026-10-15: The user selected A, limit build requests only. Newly created right-swipe build requests count; browsing ideas and left-swipe skips do not. Equivalent forum requests follow the same rule so the allowance is not tied to a particular gesture or interface.
+
+A newly created request consumes one unit regardless of whether the creator later accepts it. Retrying an existing request does not create another counted action; failed request creation consumes no unit. The numeric cap, reset timing, rollover, and refunds after withdrawal or rejection remain open. There is no paid bypass during beta, and exhausting allowance does not revoke existing membership or chat access.
+
+**Q11: Which city or developer community can seed the first beta cohort?**
+
+Unanswered. Recommendation: recruit roughly 20-50 builders through one reachable city/metro developer community, including both idea creators and interested collaborators. This is a proposed validation cohort, not a supported capacity claim or agreed signup cap. Remote participation remains welcome. The actual community, recruitment channel, invite policy, and cohort size need an answer before realistic usage limits and launch validation can be set.
 
 ## Sources
 

@@ -45,12 +45,30 @@ A collaboration group organized around an Idea, with collaborators admitted thro
 _Avoid_: Match, follower list
 
 **Circle Chat**:
-Built-in real-time group conversation for an Idea Creator and accepted collaborators in a Build Circle. It is private circle coordination, distinct from the publicly readable Public Idea Discussion.
+Built-in real-time group conversation for an Idea Creator and accepted collaborators in a Build Circle, free in beta and not premium-gated. It is private circle coordination, not Public Idea Discussion.
 _Avoid_: Public comments, direct messages, external workspace
+
+**Premium**:
+A future optional paid allowance for more swipes after beta. It is not payment for Circle Chat or Build Circle membership, and does not guarantee acceptance of a Build Request.
+_Avoid_: Chat subscription, circle sponsorship, paid membership
+
+**Swipe Allowance**:
+A usage allowance consumed by newly created Build Requests, whether initiated by right swipe or an equivalent forum action; views and Passes do not consume it. It is separate from membership and Circle Chat access, and counts creation rather than acceptance.
+_Avoid_: Membership limit, chat entitlement
+
+**Beta**:
+The initial free-to-users release of AllDevs, without checkout, subscriptions, or payment collection. Free access does not remove operational or abuse-prevention limits.
+_Avoid_: Paid trial, unlimited capacity
+
+**External Workspace**:
+A third-party place a Build Circle chooses for coordination instead of built-in Circle Chat. It has its own access controls and service terms, separate from AllDevs membership.
+_Avoid_: Public Idea Discussion, built-in chat
 
 ## Flagged Ambiguities
 
 **Match**: No separate agreed meaning. Use Build Request for a right swipe and membership for an accepted request; do not use Match for both.
+
+**Allowance policy**: Numeric limits, reset timing, rollover, and refunds after withdrawal or rejection remain undecided. The counted unit is agreed; no specific number is agreed.
 
 ## Example Dialogue
 
@@ -73,3 +91,11 @@ Domain expert: "Yes. Anyone can read the Public Idea Discussion, and you can com
 Developer: "Does commenting on an Idea let me read its Circle Chat?"
 
 Domain expert: "No. Public Idea Discussion does not grant membership or access to private Circle Chat."
+
+Developer: "Does paying let me join any Build Circle?"
+
+Domain expert: "No. Future Premium concerns extra swipes, not membership approval or Circle Chat. During Beta there are no charges."
+
+Developer: "Does skipping an Idea use my Swipe Allowance?"
+
+Domain expert: "No. Only creating a Build Request counts. Reading ideas, passing, and retrying the same request do not consume another unit."
