@@ -13,15 +13,15 @@ Discovery that prioritizes Ideas associated with a developer's Locality without 
 _Avoid_: Local-only
 
 **Remote-friendly**:
-Support for collaboration between developers in different Localities. It does not mean every Idea accepts remote participants or that membership approval is waived.
-_Avoid_: Unrestricted joining, remote-only
+Every Idea is open to Build Requests from other Localities, without a local-only mode. The Idea Creator still approves membership; remote eligibility is not guaranteed acceptance.
+_Avoid_: Automatic membership, remote-only
 
 **Idea**:
 A publicly posted proposal for something developers could build together. Each Idea has an Idea Creator.
 _Avoid_: Developer profile, match
 
 **Idea Creator**:
-The developer who posts an Idea. Posting an Idea does not itself establish ownership of other people's contributions.
+The developer who posts an Idea while signed in through GitHub. Posting an Idea does not itself establish ownership of other people's contributions.
 _Avoid_: Employer, project owner
 
 **Build Interest**:
@@ -29,7 +29,7 @@ A developer's expressed willingness to build an Idea. A right swipe turns that i
 _Avoid_: Match, membership
 
 **Build Request**:
-A developer's request to join the collaboration around an Idea, sent by swiping right. The Idea Creator reviews it, and acceptance grants Build Circle membership.
+A GitHub-signed-in developer's request to join the collaboration around an Idea, sent by swiping right. The Idea Creator reviews it, and acceptance grants Build Circle membership.
 _Avoid_: Match, automatic enrollment
 
 **Pass**:
@@ -42,8 +42,6 @@ _Avoid_: Match, follower list
 
 ## Flagged Ambiguities
 
-**Remote eligibility**: Whether each Idea Creator can restrict requests to local participants is not yet agreed. Remote-friendly describes the product, not automatic eligibility for every Idea.
-
 **Match**: No separate agreed meaning. Use Build Request for a right swipe and membership for an accepted request; do not use Match for both.
 
 ## Example Dialogue
@@ -54,4 +52,8 @@ Domain expert: "You sent a Build Request. You become a member when the Idea Crea
 
 Developer: "Does local-first mean I cannot collaborate with someone in another city?"
 
-Domain expert: "No. Discovery prioritizes your Locality, and remote collaboration is supported. Per-Idea eligibility rules are still being decided."
+Domain expert: "No. Discovery prioritizes your Locality, but every Idea accepts remote Build Requests. The Idea Creator still decides whether to accept your request."
+
+Developer: "Do I need an existing repository or a contribution streak to post an Idea?"
+
+Domain expert: "No. You need GitHub sign-in, not an activity threshold. Work evidence is optional."

@@ -16,6 +16,8 @@ Last updated: 2026-10-15.
 - Keep the agreed answers, rejected alternatives, and eventual PRD in this README.
 - Selected direction: Build Circles for local developers, with a public idea forum and Tinder-like swipe discovery of ideas for collaboration.
 - Locality is a user-selected city or metro area. Discovery is local-first and remote-friendly, rather than restricted to nearby collaborators.
+- Every idea accepts build requests from any locality. There is no creator-selectable local-only mode; creators still approve membership.
+- At launch, GitHub sign-in is required to post ideas or send build requests. There are no minimum commits, followers, or repository requirements; selected work evidence is optional.
 
 ## Decision Status
 
@@ -30,8 +32,10 @@ The confirmed brief and explicitly confirmed answers below are agreed. Everythin
 | Product direction and positioning | Build Circles selected; public idea forum plus swipe-to-build discovery; exact positioning remains open |
 | Primary discovery object | A posted idea, not a developer profile |
 | Meaning of local | User-selected city or metro area; no GPS required |
-| Discovery and remote collaboration | Local-first, remote-friendly; exact ranking, filters, and per-idea remote eligibility remain open |
+| Discovery and remote collaboration | Local-first; every idea accepts remote build requests; no local-only mode. Exact ranking and filters remain open |
 | Right-swipe outcome and circle membership | Creator-reviewed build request; acceptance grants circle membership, not the swipe itself |
+| Sign-in for posting and build requests | GitHub required at launch; no activity thresholds; optional work evidence |
+| Reading and commenting access | Open; GitHub sign-in for posting/requesting does not decide browsing or comment permissions |
 | Meaning of an open developer directory | Open; public source data does not imply permission for unrestricted reuse |
 | MVP scope, exclusions, and launch cohort | Open |
 | Permissions, consent, retention, and deletion policy | Open; launch gate |
@@ -83,18 +87,21 @@ A public idea forum and swipe discovery are now part of the selected concept. Th
 - The goal is collaboration around an idea, not a popularity contest or a universal developer ranking.
 - The idea creator reviews build requests and chooses whom to accept. Acceptance grants circle membership; a swipe alone does not.
 - Local means a user-selected city or metro area. Discovery prioritizes local ideas while supporting remote collaboration.
-- Public reading/commenting permissions, who may post or swipe, per-idea remote eligibility, and detailed circle lifecycle rules remain unresolved.
+- Every idea accepts build requests from anywhere; creators cannot make an idea local-only. Request eligibility is not automatic acceptance or a guarantee of membership.
+- Posting ideas and sending build requests require GitHub sign-in at launch, without a minimum contribution history. GitHub-linked work evidence is optional.
+- Public reading/commenting permissions, additional safety restrictions, and detailed circle lifecycle rules remain unresolved.
 - A left swipe is a skip, not a confirmed public downvote; its persistence is unresolved.
 - The forum and swipe view using the same underlying idea posts is a recommendation, not an approved implementation decision.
 
 ### Locality and Remote Participation
 
 - Confirmed: use a city or metro area as the locality, not a GPS distance radius or precise address.
-- Confirmed: local-first discovery with remote collaboration supported. Locality is not a blanket prohibition on working with people elsewhere.
-- Proposed: creators explicitly state whether an idea requires local participation or welcomes remote collaborators. This choice is not yet approved.
-- Open: the default remote setting, discovery filters, how remote ideas are surfaced, metro boundaries, and compatibility factors such as meeting expectations or timezone overlap.
-- Seeing an idea is distinct from permission to send a build request; neither visibility nor a request bypasses creator-approved membership. Detailed eligibility rules remain open.
-- A thin local feed must not silently expand to incompatible ideas. Any remote fallback and its presentation need an explicit decision.
+- Confirmed: local-first discovery, with every idea open to remote build requests. Locality affects discovery priority, not geographical request eligibility.
+- Confirmed: no per-idea local-only option. Creator-selected local-only versus remote-welcome modes were considered and not selected.
+- Open: discovery filters, how remote ideas are surfaced, metro boundaries, and compatibility factors such as meeting expectations or timezone overlap.
+- Permission to submit a request is distinct from circle membership. GitHub sign-in is required; blocking, moderation, and closed/full-circle behavior still need decisions. Geography alone does not prevent a request.
+- Creator approval remains mandatory. Remote-friendly does not require accepting every request, equal acceptance rates across localities, sharing contact details, or mandatory in-person attendance.
+- A thin local feed must not silently override selected discovery filters. Any broader fallback and its presentation need an explicit decision.
 
 ### Proposed Core Loop
 
@@ -164,7 +171,7 @@ Proposed safeguards, subject to a concrete policy review:
 
 Choose services after agreeing on the product and workload. Cloudflare-first does not mean using every Cloudflare product.
 
-With Build Circles selected, first-party ideas, discovery actions, and collaboration state are the core workload. GitHub identity and selected work evidence are candidates for support, not a requirement to crawl a global developer directory. The earlier ingestion analysis remains background for any approved GitHub enrichment.
+With Build Circles selected, first-party ideas, discovery actions, and collaboration state are the core workload. GitHub sign-in is required for posting and build requests, while selected work evidence is optional; neither requires crawling a global developer directory. The earlier ingestion analysis remains background for any approved GitHub enrichment. The specific GitHub integration, permissions, session handling, and token retention still require design review.
 
 | Responsibility | Candidate | Reason and boundary |
 | --- | --- | --- |
@@ -206,9 +213,9 @@ Agree on measurable targets before choosing implementation tactics:
 
 This is a discussion draft for the selected Build Circles direction, not an approved MVP.
 
-1. Join, select a city or metro area without requiring GPS, and explicitly approve profile visibility; GitHub sign-in and selected work evidence are recommended but unconfirmed.
+1. Sign in through GitHub to post ideas or send build requests, select a city or metro area without requiring GPS, and explicitly approve profile visibility. Selected work evidence is optional; no minimum commits, followers, or existing repository are required. Anonymous browsing and comment permissions remain open.
 2. Post an idea to the public forum. Proposed post details include the problem, intended outcome, help wanted, and expected commitment; required fields remain open.
-3. Discover ideas local-first through forum browsing and a swipe view over the same posts, with remote collaboration supported. Exact remote filters, per-idea eligibility, and who can read, comment, and react remain open.
+3. Discover ideas local-first through forum browsing and a swipe view over the same posts; every idea accepts remote build requests. Exact filters and who can read, comment, and react remain open.
 4. Swipe right to send a build request, or left to skip. Provide equivalent accessible buttons; persistence, undo, and request limits remain open.
 5. The creator reviews build requests and accepts collaborators into the circle. A right swipe alone grants neither membership nor contact access. Team capacity, review deadlines, withdrawal, and later membership changes remain open.
 6. Agree on a first concrete building step and record whether it happened. An existing GitHub repository is not yet a requirement for posting an idea.
@@ -224,7 +231,7 @@ Proposed exclusions: a global census, a universal developer score, recruiter dat
 
 **Technical test, only after authorization:** Compare a lightweight-discovery/enrichment pipeline with the reference collector on the same permitted cohort. Record calls, points, errors, duplicates, completeness, elapsed time, freshness, and cost. More concurrency alone is not an efficiency improvement.
 
-**Trust test:** Walk through a new user, a low-activity developer, a renamed account, a bot, a deletion request during an in-flight refresh, a revoked authorization, a blocked sender, and a project that becomes private. For Build Circles, also examine an idea receiving 100 interested builders, an unresponsive creator, repeated unwanted requests, a full circle, harmful public content, and a deleted idea with pending interest.
+**Trust test:** Walk through a new user, a low-activity developer, a renamed account, a bot, a deletion request during an in-flight refresh, a revoked authorization, a blocked sender, and a project that becomes private. For Build Circles, also examine an idea receiving 100 interested builders, an unresponsive creator, repeated unwanted requests, a full circle, harmful public content, and a deleted idea with pending interest. Verify that a remote builder can request to join an otherwise eligible idea, that location alone does not block the request, and that only creator acceptance grants membership.
 
 **Outcome measurement:** For Build Circles, consider circles that reach a mutually agreed first working session or verifiable building outcome, with explicit attribution limits. Define formation and success before counting them. Sign-ups, swipes, posted ideas, stars, and page views are supporting metrics, not proof of useful collaboration.
 
@@ -279,11 +286,23 @@ Reason: one idea may receive 100 requests while its creator only needs two colla
 
 Confirmed answer, 2026-10-15: The user selected both "City or metro area" and "Local-first, remote-friendly." Use a user-selected city or metro area without requiring GPS, prioritize local ideas, and support remote collaboration. This is not a local-only network.
 
-Exact ranking, remote discovery controls, the launch locality, and whether each creator can restrict an idea to local participants remain open. Remote-friendly does not imply automatic membership or permission to contact someone off-platform.
+Exact ranking, remote discovery controls, and the launch locality remain open. Q4 below resolves per-idea remote eligibility. Remote-friendly does not imply automatic membership or permission to contact someone off-platform.
 
 **Q4: Can an idea creator choose whether remote collaborators may join?**
 
-Unanswered. Recommendation: let the creator explicitly choose local-only or remote-welcome for each idea. A project needing in-person hardware testing should not receive remote requests it cannot accommodate, while a fully online project can recruit beyond its city. The default setting and any additional modes remain undecided.
+Confirmed answer, 2026-10-15: "Always remote-friendly." Every idea accepts build requests from anywhere; there is no per-idea local-only mode. Discovery remains local-first, and the creator still decides whom to accept.
+
+The earlier recommendation to offer creators local-only versus remote-welcome modes was not selected. Remote access to requests is not guaranteed admission, a bypass of blocking/moderation, or a requirement to accept requests after a circle closes; those lifecycle rules still need decisions.
+
+**Q5: Is a GitHub account required to post ideas or send build requests?**
+
+Confirmed answer, 2026-10-15: The user selected A, GitHub required. GitHub sign-in is required to post ideas or send build requests at launch. No minimum commits, followers, or existing repository are required, and work evidence is optional. Email-only sign-in was not selected for launch.
+
+This keeps identity integration focused but excludes people without GitHub accounts unless they create one. GitHub sign-in does not verify competence, legal identity, or good behavior, and does not authorize broad private-data access. Anonymous browsing, commenting permissions, and additional anti-abuse rules remain separate, unresolved decisions.
+
+**Q6: Who can read and discuss public idea posts?**
+
+Unanswered. Recommendation: anyone can read published ideas and their public discussion, while commenting requires GitHub sign-in but not circle membership. Someone should be able to ask a useful question before requesting to join. Private circle coordination, request visibility, moderation rules, and search-engine indexing are separate decisions; public discussion must not expose private information by implication.
 
 ## Sources
 
