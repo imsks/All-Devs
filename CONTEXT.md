@@ -24,6 +24,10 @@ _Avoid_: Developer profile, match
 The developer who posts an Idea while signed in through GitHub. Posting an Idea does not itself establish ownership of other people's contributions.
 _Avoid_: Employer, project owner
 
+**Public Idea Discussion**:
+The discussion attached to an Idea, readable by anyone without sign-in. Commenting requires GitHub sign-in but not Build Circle membership, and does not create a Build Request.
+_Avoid_: Private circle coordination, membership request
+
 **Build Interest**:
 A developer's expressed willingness to build an Idea. A right swipe turns that interest into a Build Request, not immediate membership.
 _Avoid_: Match, membership
@@ -57,3 +61,7 @@ Domain expert: "No. Discovery prioritizes your Locality, but every Idea accepts 
 Developer: "Do I need an existing repository or a contribution streak to post an Idea?"
 
 Domain expert: "No. You need GitHub sign-in, not an activity threshold. Work evidence is optional."
+
+Developer: "Can I ask a question before I request to join?"
+
+Domain expert: "Yes. Anyone can read the Public Idea Discussion, and you can comment after GitHub sign-in without joining the Build Circle."
