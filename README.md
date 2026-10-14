@@ -11,6 +11,7 @@ Last updated: 2026-10-15.
 - Explore a more efficient alternative to Committers.top, without restricting the product to commits or leaderboards.
 - Consider developer discovery, collaboration, discussions, social experiences, and other creative uses of public GitHub data.
 - Prefer Cloudflare wherever it provides a useful fit. Vercel is an optional frontend host, not a requirement.
+- Other providers, including GCP and MongoDB Atlas, may be evaluated where justified. This is permission to compare options, not approval to provision services or incur charges.
 - Build something that can demonstrate product judgment and engineering ability in interviews. The target interview role is unresolved.
 - Discuss and finalize the product before developing it.
 - Keep the agreed answers, rejected alternatives, and eventual PRD in this README.
@@ -19,6 +20,7 @@ Last updated: 2026-10-15.
 - Every idea accepts build requests from any locality. There is no creator-selectable local-only mode; creators still approve membership.
 - At launch, GitHub sign-in is required to post ideas or send build requests. There are no minimum commits, followers, or repository requirements; selected work evidence is optional.
 - Anyone can read published ideas and their public discussion without signing in. Commenting requires GitHub sign-in, not circle membership.
+- Accepted collaborators coordinate through built-in real-time circle chat. The user wants to avoid paid services; zero-cost operation is a design constraint, not a verified capacity claim.
 
 ## Decision Status
 
@@ -27,7 +29,7 @@ The confirmed brief and explicitly confirmed answers below are agreed. Everythin
 | Decision | Status |
 | --- | --- |
 | Documentation and discovery before development | Confirmed |
-| Cloudflare-first evaluation; Vercel optional | Confirmed preference |
+| Cloudflare-first evaluation; Vercel optional | Confirmed preference; GCP, MongoDB Atlas, and other options may also be compared |
 | Primary user and urgent problem | Local developers sharing ideas and finding people to build with; frequency and severity of the problem still need validation |
 | Interview audience and success criteria | Open |
 | Product direction and positioning | Build Circles selected; public idea forum plus swipe-to-build discovery; exact positioning remains open |
@@ -37,11 +39,11 @@ The confirmed brief and explicitly confirmed answers below are agreed. Everythin
 | Right-swipe outcome and circle membership | Creator-reviewed build request; acceptance grants circle membership, not the swipe itself |
 | Sign-in for posting and build requests | GitHub required at launch; no activity thresholds; optional work evidence |
 | Reading and commenting access | Published ideas and public discussion are readable without sign-in; GitHub sign-in is required to comment, not circle membership |
-| Private circle coordination | Open; public discussion does not decide how accepted collaborators coordinate privately |
+| Private circle coordination | Built-in real-time group chat selected; private to the circle, not an external-only workspace or asynchronous-only thread |
 | Meaning of an open developer directory | Open; public source data does not imply permission for unrestricted reuse |
 | MVP scope, exclusions, and launch cohort | Open |
 | Permissions, consent, retention, and deletion policy | Open; launch gate |
-| Budget, time commitment, and deadline | Open |
+| Budget, time commitment, and deadline | Avoid paid services; no paid provisioning authorized. Quota-exhaustion behavior, launch workload, time commitment, and deadline remain open |
 | Stack and infrastructure services | Proposed only |
 | Implementation and publication to an issue tracker | Not authorized at this stage |
 
@@ -80,7 +82,7 @@ These are product judgments, not market-research findings. Build Circles was sel
 | Hackathon Team Draft | Hackathon participants | Assemble complementary, opted-in teams around availability and project goals | Episodic usage and partner-dependent distribution | Viable if event access exists |
 | Developer Dating | Adults explicitly seeking relationships | Separate opt-in profiles with ordinary mutual-consent matching; GitHub identity is optional context | Safety, age assurance, sensitive data, and local network density | Not recommended as the initial product |
 
-A public idea forum and swipe discovery are now part of the selected concept. They can be two views over the same ideas, not two separate communities. General-purpose social posting, custom chat, dating, hiring, and rankings remain separate, unapproved commitments. Tinder is an interaction reference, not a decision to build romantic matching.
+A public idea forum, swipe discovery, and built-in real-time circle chat are now part of the selected concept. The forum and swipe interface can be two views over the same ideas, not two separate communities. General-purpose social posting, unrelated direct messaging, voice/video calls, dating, hiring, and rankings remain separate, unapproved commitments. Tinder is an interaction reference, not a decision to build romantic matching.
 
 ### Confirmed Core Concept
 
@@ -92,7 +94,8 @@ A public idea forum and swipe discovery are now part of the selected concept. Th
 - Every idea accepts build requests from anywhere; creators cannot make an idea local-only. Request eligibility is not automatic acceptance or a guarantee of membership.
 - Posting ideas and sending build requests require GitHub sign-in at launch, without a minimum contribution history. GitHub-linked work evidence is optional.
 - Anyone can read published ideas and their public discussion. GitHub-signed-in developers can comment before joining a circle; commenting does not send a build request or grant membership.
-- Private circle coordination, build-request visibility, moderation and safety restrictions, search-engine indexing, and detailed circle lifecycle rules remain unresolved.
+- Accepted collaborators coordinate through built-in real-time circle chat, separate from the publicly readable idea discussion.
+- Build-request visibility, moderation and safety restrictions, search-engine indexing, detailed circle lifecycle rules, and access to chat history after membership changes remain unresolved.
 - A left swipe is a skip, not a confirmed public downvote; its persistence is unresolved.
 - The forum and swipe view using the same underlying idea posts is a recommendation, not an approved implementation decision.
 
@@ -110,7 +113,7 @@ A public idea forum and swipe discovery are now part of the selected concept. Th
 
 Post an idea with city or metro context -> discover ideas local-first, with remote collaboration supported -> send a build request -> creator accepts -> join the circle -> take a first concrete building step.
 
-Posting, public reading, GitHub-signed-in public commenting, right-swipe build requests, creator-approved membership, and left-swipe skip are agreed interactions. Request withdrawal, expiry, team capacity, private coordination, progress tracking, and the first-step milestone still need decisions.
+Posting, public reading, GitHub-signed-in public commenting, right-swipe build requests, creator-approved membership, left-swipe skip, and real-time circle chat are agreed interactions. Request withdrawal, expiry, team capacity, chat scope and retention, progress tracking, and the first-step milestone still need decisions.
 
 **Product hypothesis:** Idea-first discovery can help local developers turn shared interests into an actual collaboration. Test this by tracking mutually agreed first working sessions or other explicitly chosen building outcomes, rather than swipe volume alone.
 
@@ -188,13 +191,42 @@ With Build Circles selected, first-party ideas, discovery actions, and collabora
 | Abuse controls | Turnstile and application-level limits | Protect onboarding and introductions; not a replacement for authorization or moderation |
 | Frontend | Cloudflare static assets / Workers or Vercel | Cloudflare can host the frontend too; Vercel is reasonable if framework ergonomics justify another platform |
 | Semantic retrieval | Workers AI and Vectorize, later | Only after a keyword/filter baseline shows a measured need and data-use review permits it |
-| Real-time rooms | Durable Objects, later | Add only if real-time collaboration is validated; a public forum or swipe interaction does not itself require WebSockets |
+| Real-time circle chat | SQLite-backed Durable Objects with WebSocket Hibernation | Recommended candidate now that real-time chat is selected; a room per circle isolates coordination, but quotas, membership authorization, history storage, and recovery must be validated |
 
 Proposed ingestion flow: approved profile or curated project -> lightweight identity discovery -> durable bounded task -> permitted enrichment -> normalized source-linked evidence -> derived search views -> cached public response.
 
 Proposed reliability properties: idempotency, durable progress, retry backoff with jitter, upstream-budget awareness, job deduplication, stale-data labels, and repairable partial failures. Deletion must also suppress future ingestion and invalidate downstream copies.
 
 Do not expose GitHub tokens in browser code, public logs, documentation, or queue payloads. A Vercel/Cloudflare split also requires an explicit session, CSRF, cookie, origin, and CORS design; CORS alone is not authorization.
+
+### Real-Time Chat and Zero-Cost Target
+
+**Confirmed product decision:** Built-in real-time circle chat, rather than an asynchronous-only thread or external-only workspace. This selects the experience, not a vendor, an unlimited traffic guarantee, or the full chat feature set.
+
+**Cost constraint:** The user wants to avoid paying for services. Do not enable a paid plan, assume overages are acceptable, or use temporary credits as evidence of sustainable zero-cost operation. A free-tier pilot is plausible, not yet validated. Quota exhaustion, traffic spikes, abuse, and growing message history must have an explicit operating policy.
+
+Official documentation checked on 2026-10-15:
+
+| Candidate | Free-tier evidence | Important boundary | Recommendation |
+| --- | --- | --- | --- |
+| Cloudflare Workers plus SQLite-backed Durable Objects | Durable Objects are available on Workers Free, including WebSocket Hibernation. Documented free DO allowances include 100,000 requests/day, 13,000 GB-s duration/day, 5 million SQL rows read/day, 100,000 SQL rows written/day, and 5 GB account storage | These are account allowances, not per-circle quotas or supported-user counts. Workers have their own quotas; indexes, metadata, retries, history reads, and non-chat features consume resources. Operations fail when relevant free limits are exceeded | First candidate to validate for a bounded pilot; no paid Workers subscription is inherently required for this candidate |
+| GCP Cloud Run | Request-based free allowances include 180,000 vCPU-seconds, 360,000 GiB-seconds, and 2 million requests/month, applied using the documented regional pricing rules | Active long-lived requests consume compute allocation. Network transfer, builds, image storage, and external coordination may add cost; free quotas are not a zero-spend cap | Keep as an alternative if measurements justify it, not a way to assume WebSocket sessions cost nothing |
+| MongoDB Atlas Free | Documented limits include 0.5 GB storage including indexes, 500 database connections, 100 operations/second, and rolling seven-day transfer limits of 10 GB in and 10 GB out | A database connection is not a chat user or a WebSocket allowance. Atlas Free does not supply the application's WebSocket server, automatic storage expansion, or managed backups | Optional database alternative, not needed alongside D1/DO storage without a concrete requirement |
+
+Proposed Cloudflare-first design, not approved implementation:
+
+- Use Workers for GitHub sessions, APIs, and WebSocket admission; D1 remains a candidate for profiles, ideas, public comments, membership, and build requests.
+- Use one SQLite-backed Durable Object per circle for real-time room coordination and, if selected, durable chat history. Do not duplicate every message into another database without a real need.
+- Use the Hibernation WebSocket API so idle rooms can keep connections without remaining active. Timers, pending work, and ordinary non-hibernating sockets can defeat this saving; hibernation does not make active message handling or storage free.
+- The documented 20:1 incoming-WebSocket-message ratio applies to request billing, not SQL writes, runtime limits, or guaranteed message capacity. Outgoing frames have no DO request charge, but fan-out still consumes work and must be bounded.
+- Check membership server-side for connections, message operations, and history access. Design revocation for already-connected members, session expiry, room deletion, and administrative moderation; admission checks alone are insufficient.
+- Define message IDs, persistence acknowledgments, deduplication, bounded history pagination, reconnect catch-up, and backpressure. Deployments can disconnect sockets; do not claim exactly-once delivery or uninterrupted connections.
+- Recommend text-first chat with bounded message sizes, rate limits, active connections, room sizes, and history retention. Attachments, presence, typing indicators, read receipts, DMs, voice/video, and push notifications remain unapproved and need separate cost estimates.
+- Do not split across providers just to accumulate free quotas. Cross-provider latency, credentials, egress, consistency, and operations may cost more than the apparent savings. Follow provider terms rather than rotating accounts or evading limits.
+
+**Illustrative sizing, not a supported workload:** 500 daily active users sending 20 messages each means 10,000 new messages/day. At three stored-row writes per message including indexes, this alone would use roughly 30,000 writes/day, before other writes. At 1 KB per stored message, 30 days is roughly 300 MB of raw messages before indexes, metadata, edits, or backups. Connection churn, history reads, active room duration, fan-out, and abuse can exhaust a different allowance first. No concurrency or free-capacity claim is established by this arithmetic.
+
+Before choosing a provider, agree on daily active users, simultaneous connections, concurrently active circles, messages/day and peak rate, average message size, recipient fan-out, history reads, retention, and allowed interruption. Then compare measured usage against every relevant allowance with headroom.
 
 ## What Efficient Must Mean
 
@@ -207,10 +239,11 @@ Agree on measurable targets before choosing implementation tactics:
 - Retry amplification, duplicate work, partial failures, and time to recover a stalled job.
 - Database rows scanned/written, stored bytes, queue operations, and actual monthly spend.
 - Deletion completion time and prevention of reappearance from stale tasks or caches.
+- For chat: delivery and acknowledgment latency, reconnect recovery, active room duration, concurrent connections, fan-out, history-read/write amplification, retention growth, and quota headroom. Platform scalability and zero-cost capacity are different claims.
 
 **Illustrative sizing, not a forecast:** 10,000 profiles refreshed once per week would average about 1,429 profile refreshes per day. At three upstream requests per refresh, that is about 4,286 requests per day, excluding discovery, pagination, retries, and deep evidence retrieval. Measure query cost and burst limits before declaring this viable; daily averages do not establish quota compliance.
 
-**Illustrative budget:** Cloudflare documents a Workers paid-plan minimum of USD 5/month. A small bounded pilot might fit largely inside included allowances, but D1, queues, storage, AI, observability, email, domains, Vercel, taxes, and overages must be modeled separately. No all-in monthly estimate or free-tier guarantee has been approved. Set alerts, application budgets, and circuit breakers; billing alerts are not hard spending caps.
+**Budget target:** Avoid paid services for the pilot. Cloudflare's Workers paid-plan minimum of USD 5/month describes an optional upgrade, not a prerequisite for SQLite-backed Durable Objects on Workers Free and not an approved purchase. D1, queues, storage, AI, observability, email, domains, Vercel, and any alternative provider must be modeled separately. No all-in free-tier guarantee has been established. Set application limits and quota headroom; billing alerts are not hard spending caps. Whether to throttle or pause chat rather than pay when limits approach is the next open decision.
 
 ## Proposed First Release
 
@@ -221,10 +254,10 @@ This is a discussion draft for the selected Build Circles direction, not an appr
 3. Discover ideas local-first through forum browsing and a swipe view over the same posts; every idea accepts remote build requests. Public reading and GitHub-signed-in commenting do not require circle membership. Exact filters and reaction behavior remain open.
 4. Swipe right to send a build request, or left to skip. Provide equivalent accessible buttons; persistence, undo, and request limits remain open.
 5. The creator reviews build requests and accepts collaborators into the circle. A right swipe alone grants neither membership nor contact access. Team capacity, review deadlines, withdrawal, and later membership changes remain open.
-6. Agree on a first concrete building step and record whether it happened. How accepted collaborators coordinate privately remains open. An existing GitHub repository is not required for posting an idea.
+6. Coordinate through built-in private real-time circle chat, agree on a first concrete building step, and record whether it happened. Chat feature scope, history retention, membership-change behavior, and quota policy remain open. An existing GitHub repository is not required for posting an idea.
 7. Manage idea and profile visibility, report content, block abuse, and request deletion under a defined retention policy.
 
-Proposed exclusions: a global census, a universal developer score, recruiter data exports, private-repository ingestion, dating, a general-purpose social feed unrelated to ideas, custom real-time chat, payments, and an autonomous AI matching agent. The public idea forum itself is part of the selected concept, not an excluded feed.
+Proposed exclusions: a global census, a universal developer score, recruiter data exports, private-repository ingestion, dating, a general-purpose social feed unrelated to ideas, unrelated direct messaging, voice/video calls, payments, and an autonomous AI matching agent. The public idea forum and real-time circle chat are selected features, not exclusions. Attachments and other chat enhancements remain unapproved.
 
 ## Validation Before Development
 
@@ -233,6 +266,8 @@ Proposed exclusions: a global census, a universal developer score, recruiter dat
 **Cold-start test:** Identify one reachable local community and a credible recruitment channel with both idea creators and willing builders. An empty worldwide network is not a launch plan. Measure whether enough relevant ideas and responsive people exist in the same locality before expanding it.
 
 **Technical test, only after authorization:** Compare a lightweight-discovery/enrichment pipeline with the reference collector on the same permitted cohort. Record calls, points, errors, duplicates, completeness, elapsed time, freshness, and cost. More concurrency alone is not an efficiency improvement.
+
+**Chat test, only after authorization:** Benchmark the agreed workload and bursts, not an unspecified number of users. Measure request/compute/storage usage, hibernation behavior, fan-out, reconnect recovery, duplicate sends, persistence failures, and history pagination. Test a revoked member with a live socket, unauthorized room/history access, session expiry, deploy-induced disconnects, a slow receiver, and reaching each quota. Do not report a failed persistence operation as a successfully saved message. Record both cost and availability before claiming a zero-cost capacity.
 
 **Trust test:** Walk through a new user, a low-activity developer, a renamed account, a bot, a deletion request during an in-flight refresh, a revoked authorization, a blocked sender, and a project that becomes private. For Build Circles, also examine an idea receiving 100 interested builders, an unresponsive creator, repeated unwanted requests, a full circle, harmful public content, and a deleted idea with pending interest. Verify that a remote builder can request to join an otherwise eligible idea, that location alone does not block the request, and that only creator acceptance grants membership.
 
@@ -307,15 +342,21 @@ This keeps identity integration focused but excludes people without GitHub accou
 
 Confirmed answer, 2026-10-15: The user selected A, public discussion. Anyone can read published ideas and their public discussion without signing in. GitHub-signed-in users can comment without joining the circle, so they can ask questions and refine an idea before committing to build it.
 
-Commenting is distinct from sending a build request or becoming a member. Member-only commenting was not selected. This does not approve exposing request details, personal contact information, or private circle coordination. Moderation, search-engine indexing, and private coordination remain separate decisions.
+Commenting is distinct from sending a build request or becoming a member. Member-only commenting was not selected. This does not approve exposing request details, personal contact information, or private circle coordination. Moderation and search-engine indexing remain open; Q7 below resolves the private coordination experience.
 
 **Q7: Where should accepted circle members coordinate?**
 
-Unanswered. Recommendation: a private, asynchronous circle discussion for accepted collaborators, separate from the public idea discussion. Alternatives are an external workspace link or built-in real-time chat. A private asynchronous thread would preserve team context in AllDevs without requiring a real-time chat system; its authorization, moderation, retention, and membership-change behavior would still need design. No private messaging feature is approved yet.
+Confirmed answer, 2026-10-15: Built-in real-time chat for accepted circle members. The asynchronous-only recommendation and external-only coordination were not selected. The user wants to avoid paid services and permits evaluating GCP, Cloudflare, MongoDB, and other options; vendor choice and traffic capacity are not finalized.
+
+The experience is selected, but free operation at arbitrary scale is not established. Provider quotas, usage measurements, bounded chat scope, retention, authorization, and operating behavior at quota exhaustion still need decisions. This answer does not authorize starting development, provisioning infrastructure, or spending money.
+
+**Q8: What should happen if free-tier limits are approached or exhausted?**
+
+Unanswered. Recommendation: enforce a hard zero-spend pilot, with proactive application limits and clear throttling or temporary unavailability instead of unapproved charges. An alternative is to seek explicit approval for a small paid upgrade to preserve availability. Until the user changes the constraint, paid provisioning and overages are not authorized; alerts alone are not a spending cap.
 
 ## Sources
 
-Official documentation consulted on 2026-10-14; pricing, endpoint behavior, and quotas can change. The general acceptable-use and API terms do not constitute product-specific approval.
+Official GitHub and initial Cloudflare documentation consulted on 2026-10-14; real-time chat pricing and limits checked on 2026-10-15. Pricing, endpoint behavior, and quotas can change. The general acceptable-use and API terms do not constitute product-specific approval.
 
 - Local Committers.top implementation: `github/github.go`, `top/top.go`, and `main.go` in the adjacent reference project.
 - [GitHub GraphQL rate and query limits](https://docs.github.com/en/graphql/overview/rate-limits-and-query-limits-for-the-graphql-api)
@@ -323,3 +364,8 @@ Official documentation consulted on 2026-10-14; pricing, endpoint behavior, and 
 - [GitHub acceptable-use policies, especially information usage and privacy](https://docs.github.com/en/site-policy/acceptable-use-policies/github-acceptable-use-policies)
 - [GitHub API terms: review before finalizing the data model](https://docs.github.com/en/site-policy/github-terms/github-terms-of-service#h-api-terms)
 - [Cloudflare Workers and related service pricing](https://developers.cloudflare.com/workers/platform/pricing/)
+- [Cloudflare Durable Objects pricing and free allowances](https://developers.cloudflare.com/durable-objects/platform/pricing/)
+- [Cloudflare Durable Objects limits](https://developers.cloudflare.com/durable-objects/platform/limits/)
+- [Cloudflare WebSocket Hibernation and deployment disconnects](https://developers.cloudflare.com/durable-objects/best-practices/websockets/)
+- [GCP Cloud Run pricing](https://cloud.google.com/run/pricing)
+- [MongoDB Atlas Free cluster limits](https://www.mongodb.com/docs/atlas/reference/free-shared-limitations/)

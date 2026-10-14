@@ -44,6 +44,10 @@ _Avoid_: Downvote, rejection of a person
 A collaboration group organized around an Idea, with collaborators admitted through Idea Creator approval of Build Requests. It is distinct from the set of interested developers or pending requests.
 _Avoid_: Match, follower list
 
+**Circle Chat**:
+Built-in real-time group conversation for an Idea Creator and accepted collaborators in a Build Circle. It is private circle coordination, distinct from the publicly readable Public Idea Discussion.
+_Avoid_: Public comments, direct messages, external workspace
+
 ## Flagged Ambiguities
 
 **Match**: No separate agreed meaning. Use Build Request for a right swipe and membership for an accepted request; do not use Match for both.
@@ -65,3 +69,7 @@ Domain expert: "No. You need GitHub sign-in, not an activity threshold. Work evi
 Developer: "Can I ask a question before I request to join?"
 
 Domain expert: "Yes. Anyone can read the Public Idea Discussion, and you can comment after GitHub sign-in without joining the Build Circle."
+
+Developer: "Does commenting on an Idea let me read its Circle Chat?"
+
+Domain expert: "No. Public Idea Discussion does not grant membership or access to private Circle Chat."
