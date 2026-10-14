@@ -1,101 +1,151 @@
-# Build Circles
+# AllDevs Product Context
 
-Developers share public ideas and discover opportunities to build together through local-first, remote-friendly discovery. This glossary distinguishes locality, expressed interest, and actual collaboration groups.
+**AllDevs helps developers discover ideas and find people to build them with.**
 
-## Language
+The chosen product is **Build Circles**: a public idea forum with Tinder-like swipe discovery, creator-approved teams, and private real-time group chat. People swipe on ideas, not developer profiles. It is a collaboration product, not a dating app or commit leaderboard.
 
-**Locality**:
-A user-selected city or metro area that provides local context for discovery. It is not a precise address, a GPS radius, or proof of residence.
-_Avoid_: Exact location, verified residence
+Updated: 2026-10-15. This is the consolidated product reference, not permission to start development. The launch city/community will be decided later. See [README.md](README.md) for the combined product and technical plan.
 
-**Local-first**:
-Discovery that prioritizes Ideas associated with a developer's Locality without excluding remote collaboration.
-_Avoid_: Local-only
+**How to read this document:** Agreed rules are recorded below. Sections labeled Recommended or To Decide are not approved requirements.
 
-**Remote-friendly**:
-Every Idea is open to Build Requests from other Localities, without a local-only mode. The Idea Creator still approves membership; remote eligibility is not guaranteed acceptance.
-_Avoid_: Automatic membership, remote-only
+## People and Their Goals
 
-**Idea**:
-A publicly posted proposal for something developers could build together. Each Idea has an Idea Creator.
-_Avoid_: Developer profile, match
+| Person | Goal |
+| --- | --- |
+| Visitor | Explore ideas and read public discussion before signing up |
+| Builder | Find an interesting idea, ask questions, and offer to collaborate |
+| Idea Creator | Share a proposal and choose suitable collaborators |
+| Circle Member | Coordinate with the creator and other accepted collaborators |
 
-**Idea Creator**:
-The developer who posts an Idea while signed in through GitHub. Posting an Idea does not itself establish ownership of other people's contributions.
-_Avoid_: Employer, project owner
+One developer can create some ideas and join other circles. GitHub sign-in is required to post, comment, or send a build request. There is no minimum contribution history, follower count, or repository requirement. Work evidence is optional; GitHub sign-in does not prove skill or legal identity.
 
-**Public Idea Discussion**:
-The discussion attached to an Idea, readable by anyone without sign-in. Commenting requires GitHub sign-in but not Build Circle membership, and does not create a Build Request.
-_Avoid_: Private circle coordination, membership request
+## The Main Journey
 
-**Build Interest**:
-A developer's expressed willingness to build an Idea. A right swipe turns that interest into a Build Request, not immediate membership.
-_Avoid_: Match, membership
+1. Read ideas and public comments without signing in.
+2. Sign in with GitHub to participate and select a city or metro area; GPS is not required.
+3. Publish an idea, or discover other ideas through forum browsing and swipe discovery.
+4. Ask questions in the public discussion without needing circle membership.
+5. Swipe right to send a build request, or left to skip.
+6. The idea creator reviews requests and accepts collaborators. A request alone does not grant membership.
+7. Accepted collaborators use private real-time circle chat or an external workspace.
+8. Build together. Tracking milestones or completed work is recommended, not yet part of the agreed feature scope.
 
-**Build Request**:
-A GitHub-signed-in developer's request to join the collaboration around an Idea, sent by swiping right. The Idea Creator reviews it, and acceptance grants Build Circle membership.
-_Avoid_: Match, automatic enrollment
+## Agreed Product Rules
 
-**Pass**:
-A developer's decision to skip an Idea, represented by a left swipe. A Pass does not mean the Idea is bad.
-_Avoid_: Downvote, rejection of a person
+### Ideas and Discovery
 
-**Build Circle**:
-A collaboration group organized around an Idea, with collaborators admitted through Idea Creator approval of Build Requests. It is distinct from the set of interested developers or pending requests.
-_Avoid_: Match, follower list
+- Ideas are public proposals for things developers can build together. An existing repository is not required.
+- Discovery is local-first: prioritize a user's selected city or metro area.
+- Every idea is remote-friendly and accepts requests from other locations. There is no local-only creator setting.
+- Remote eligibility does not guarantee acceptance. Creators still choose their collaborators.
+- A left swipe means skip, not a public downvote or rejection of a person.
+- Exact ranking, filters, skip persistence, and undo behavior remain to be decided.
 
-**Circle Chat**:
-Built-in real-time group conversation for an Idea Creator and accepted collaborators in a Build Circle, free in beta and not premium-gated. It is private circle coordination, not Public Idea Discussion.
-_Avoid_: Public comments, direct messages, external workspace
+**Recommended:** forum browsing and swipe discovery should be two views of the same idea posts, with equivalent buttons for people who do not use swipe gestures.
 
-**Premium**:
-A future optional paid allowance for more swipes after beta. It is not payment for Circle Chat or Build Circle membership, and does not guarantee acceptance of a Build Request.
-_Avoid_: Chat subscription, circle sponsorship, paid membership
+### Public Discussion and Private Teams
 
-**Swipe Allowance**:
-A usage allowance consumed by newly created Build Requests, whether initiated by right swipe or an equivalent forum action; views and Passes do not consume it. It is separate from membership and Circle Chat access, and counts creation rather than acceptance.
-_Avoid_: Membership limit, chat entitlement
+| Action | Agreed Access |
+| --- | --- |
+| Read an idea or its public discussion | Anyone, without sign-in |
+| Post an idea or public comment | GitHub-signed-in users |
+| Send a build request | GitHub-signed-in users, subject to the request allowance and safety rules |
+| Become a collaborator | The idea creator must accept the request |
+| Use private circle chat | The creator and accepted collaborators; no premium subscription required |
 
-**Beta**:
-The initial free-to-users release of AllDevs, without checkout, subscriptions, or payment collection. Free access does not remove operational or abuse-prevention limits.
-_Avoid_: Paid trial, unlimited capacity
+Commenting does not send a request or grant membership. Public discussion and private chat are separate. Build-request visibility and history access after membership changes are not yet decided.
 
-**External Workspace**:
-A third-party place a Build Circle chooses for coordination instead of built-in Circle Chat. It has its own access controls and service terms, separate from AllDevs membership.
-_Avoid_: Public Idea Discussion, built-in chat
+### Build-Request Allowance
 
-## Flagged Ambiguities
+- Only a newly created build request consumes one allowance unit. The creator does not have to accept it for it to count.
+- Equivalent requests from the forum follow the same rule as right swipes.
+- Reading ideas and left-swipe skips consume no units.
+- Failed request creation consumes no unit; retrying the same request must not count twice.
+- Exhausting the allowance does not revoke existing membership or chat access.
+- There is no paid bypass during beta.
 
-**Match**: No separate agreed meaning. Use Build Request for a right swipe and membership for an accepted request; do not use Match for both.
+**To Decide:** the numeric allowance, reset schedule, rollover, and whether withdrawal or rejection restores a unit.
 
-**Allowance policy**: Numeric limits, reset timing, rollover, and refunds after withdrawal or rejection remain undecided. The counted unit is agreed; no specific number is agreed.
+### Chat and External Coordination
 
-## Example Dialogue
+- Built-in real-time group chat is selected, rather than an asynchronous-only built-in discussion.
+- Chat is private circle coordination and free in beta. It is not the premium feature.
+- Circles can choose an external workspace instead; the external provider has its own terms, costs, and permissions.
+- Member removal, message history, retention, export, and moderation require explicit policies before launch.
 
-Developer: "I swiped right on an Idea. Am I in its Build Circle?"
+**Recommended Beta Scope:** text-first chat with bounded message size, room size, usage, and retention. Attachments, typing indicators, presence, read receipts, push notifications, DMs, and voice/video are not approved features.
 
-Domain expert: "You sent a Build Request. You become a member when the Idea Creator accepts it."
+### Free Beta and Future Premium
 
-Developer: "Does local-first mean I cannot collaborate with someone in another city?"
+- Beta is free to users. No checkout, subscriptions, payment collection, or paywalls.
+- Future premium means optional extra swipes after beta, not paid chat, sponsored circles, or paid membership.
+- Premium never guarantees acceptance or bypasses creator approval, privacy, or abuse controls.
+- Future pricing, packaging, allowances, and beta-exit timing are undecided. Billing is not a beta development requirement.
 
-Domain expert: "No. Discovery prioritizes your Locality, but every Idea accepts remote Build Requests. The Idea Creator still decides whether to accept your request."
+### The Pilot Budget
 
-Developer: "Do I need an existing repository or a contribution streak to post an Idea?"
+- Backend and other non-Vercel infrastructure spend is capped at USD 0 for the pilot. The user will handle Vercel frontend plan/costs separately, as an exception to the earlier all-in target.
+- Limit usage proactively and throttle or temporarily pause chat rather than incur charges.
+- Free access does not mean unlimited capacity or guaranteed uptime.
+- Paid backend infrastructure requires new explicit approval, even if revenue exists later. User-managed Vercel costs do not authorize an assistant-initiated purchase or an unspecified spending amount.
+- The number of users, connections, and messages that fit this budget has not been measured.
 
-Domain expert: "No. You need GitHub sign-in, not an activity threshold. Work evidence is optional."
+## Trust and User Protection
 
-Developer: "Can I ask a question before I request to join?"
+These are required design/launch considerations, not a completed policy or a claim of legal approval:
 
-Domain expert: "Yes. Anyone can read the Public Idea Discussion, and you can comment after GitHub sign-in without joining the Build Circle."
+- Separate GitHub sign-in, importing work evidence, publishing a profile, and permission to contact someone.
+- Use only permitted public GitHub evidence that users choose to include. Do not infer sensitive traits, exact location, availability, or competence from activity counts.
+- Public GitHub data is not unrestricted personal data. No email harvesting, unsolicited bulk outreach, or sale of personal contact lists.
+- Define profile visibility, correction, block/report, deletion, and protection against deleted data reappearing.
+- Publicly posting an idea does not transfer ownership, grant a code license, or promise confidentiality.
+- A public commenter must not gain private chat or contact access merely by commenting.
+- External workspace links need an access policy. AllDevs cannot revoke a copied third-party invite without a separate integration.
 
-Developer: "Does commenting on an Idea let me read its Circle Chat?"
+## How We Will Judge Value
 
-Domain expert: "No. Public Idea Discussion does not grant membership or access to private Circle Chat."
+**Recommended primary outcome:** circles that reach a mutually agreed first working session or another verifiable building outcome.
 
-Developer: "Does paying let me join any Build Circle?"
+Supporting measurements: published ideas, useful discussions, requests sent and accepted, time to first collaborator, returning builders, and abuse reports. Swipes and sign-ups alone are not proof of successful collaboration. Targets and completion criteria remain to be decided.
 
-Domain expert: "No. Future Premium concerns extra swipes, not membership approval or Circle Chat. During Beta there are no charges."
+**Recommended validation:** test with a small consenting cohort before claiming product demand or free-tier capacity. The city/community and recruitment plan are explicitly deferred; 20-50 builders was a suggestion, not an agreed signup cap.
 
-Developer: "Does skipping an Idea use my Swipe Allowance?"
+## To Decide Later
 
-Domain expert: "No. Only creating a Build Request counts. Reading ideas, passing, and retrying the same request do not consume another unit."
+| Topic | Status |
+| --- | --- |
+| Launch city/community and recruitment | Explicitly deferred by the user |
+| Beta cohort size, invite policy, and deadline | Not decided |
+| Required idea fields, filters, and ranking | Not decided |
+| Numeric request limits and reset/refund rules | Not decided |
+| Request withdrawal/expiry, circle capacity, leaving/removal, and ownership changes | Not decided |
+| Chat history, retention, deletion/export, moderation, and optional enhancements | Not decided |
+| Profile/request/link visibility, search-engine indexing, and contact permissions | Not decided |
+| Validation targets, supported workload, and beta-exit criteria | Not decided |
+| Future premium price and packaging | Post-beta; not decided |
+| Implementation stack, delivery plan, and test approval | Proposed in README; not approved |
+
+These gaps do not prevent organizing the documentation. They are not silently filled in or treated as permission to develop or launch.
+
+## Product Language
+
+| Term | Meaning |
+| --- | --- |
+| Idea | A public proposal to build something together; not a developer profile |
+| Idea Creator | The GitHub-signed-in developer who posts an idea and approves collaborators |
+| Build Interest | A developer's willingness to help build an idea |
+| Build Request | A request for collaboration; right swipe is one way to send it |
+| Pass | A skip that consumes no build-request allowance; not a downvote |
+| Build Circle | The collaboration group around an idea; not its pending-request list |
+| Circle Member | An accepted collaborator; expressing interest alone is not membership |
+| Public Idea Discussion | Comments anyone can read; GitHub sign-in is required to contribute |
+| Circle Chat | Private built-in real-time coordination for the creator and accepted collaborators |
+| Locality | A user-selected city or metro area; not a precise address or proof of residence |
+| Local-first | Prioritizing nearby ideas without excluding remote collaboration |
+| Remote-friendly | Allowing requests from other localities, without guaranteeing acceptance |
+| Swipe Allowance | The allowance for newly created build requests, independent of membership and chat |
+| Beta | The free initial release, with safety and operational limits but no billing |
+| Premium | Optional paid extra swipes after beta; not a chat or circle subscription |
+| External Workspace | A third-party coordination space with its own access controls and terms |
+
+Avoid using "match" for both a request and an accepted membership. Say which relationship is meant.
