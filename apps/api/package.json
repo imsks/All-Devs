@@ -1,0 +1,28 @@
+{
+  "name": "@alldevs/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --local --ip 127.0.0.1 --port 8787",
+    "typecheck": "wrangler types && tsc --noEmit",
+    "test": "vitest run",
+    "build": "wrangler deploy --dry-run --outdir dist",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate:local": "wrangler d1 migrations apply alldevs-local --local"
+  },
+  "dependencies": {
+    "@alldevs/contracts": "0.1.0",
+    "@better-auth/drizzle-adapter": "1.7.8",
+    "better-auth": "1.7.8",
+    "drizzle-orm": "0.45.4",
+    "hono": "4.13.13",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-plugin": "1.4.2",
+    "@cloudflare/workers-types": "5.20261015.1",
+    "drizzle-kit": "0.31.11",
+    "wrangler": "4.151.0"
+  }
+}

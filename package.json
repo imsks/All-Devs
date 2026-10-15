@@ -1,0 +1,31 @@
+{
+  "name": "alldevs",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": ["apps/*", "packages/*"],
+  "engines": { "node": "^22.12.0 || ^24.0.0 || ^26.0.0", "npm": ">=10" },
+  "packageManager": "npm@11.17.0",
+  "scripts": {
+    "dev": "concurrently --kill-others --names api,web \"npm run dev:api\" \"npm run dev:web\"",
+    "dev:web": "npm run dev --workspace @alldevs/web",
+    "dev:api": "npm run dev --workspace @alldevs/api",
+    "lint": "eslint apps/api/src packages/contracts/src tests && npm run lint --workspace @alldevs/web",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "test:e2e": "playwright test",
+    "build": "npm run build --workspace @alldevs/api && npm run build --workspace @alldevs/web",
+    "check": "npm run lint && npm run typecheck && npm test",
+    "db:generate": "npm run db:generate --workspace @alldevs/api",
+    "db:migrate:local": "npm run db:migrate:local --workspace @alldevs/api"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "@types/node": "26.6.5",
+    "concurrently": "10.0.6",
+    "eslint": "10.12.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.71.2",
+    "vitest": "4.1.11"
+  }
+}

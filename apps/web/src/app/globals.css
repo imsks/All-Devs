@@ -1,0 +1,35 @@
+:root {
+  --ink: #202824;
+  --muted: #637069;
+  --line: #dce3de;
+  --accent: #196b52;
+  --paper: #fcfdfc;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Trebuchet MS", sans-serif; }
+a { color: inherit; }
+button { font: inherit; }
+.site-header { min-height: 96px; display: flex; align-items: center; gap: 20px; padding: 20px 5%; border-bottom: 1px solid var(--line); }
+.brand { font: bold 30px Georgia, serif; text-decoration: none; }
+.brand span { display: block; margin-top: 5px; font: 12px "Trebuchet MS", sans-serif; color: var(--muted); }
+.preview-label { margin-left: auto; color: #9e4836; font-size: 12px; }
+.github-button { display: inline-flex; align-items: center; gap: 7px; min-height: 38px; padding: 8px 12px; border: 1px solid var(--line); background: white; border-radius: 4px; color: var(--muted); }
+.github-button:disabled { cursor: not-allowed; opacity: .7; }
+.workspace { display: grid; grid-template-columns: minmax(0, 1fr) 240px; max-width: 1240px; margin: 0 auto; padding: 46px 5%; gap: 48px; }
+.section-label { color: var(--accent); font-size: 12px; margin: 0 0 12px; }
+h1 { font: 36px Georgia, serif; margin: 0; }
+.empty-state { min-height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--muted); border-block: 1px solid var(--line); margin-top: 28px; }
+.empty-state svg { color: var(--accent); }
+.circles { border-left: 1px solid var(--line); padding: 8px 0 0 24px; color: var(--muted); }
+.circles h2 { font-size: 17px; color: var(--ink); margin: 14px 0; }
+.circles p { font-size: 14px; }
+@media (max-width: 640px) {
+  .site-header { gap: 12px; padding-inline: 20px; }
+  .brand { font-size: 26px; }
+  .preview-label { max-width: 52px; line-height: 1.4; }
+  .workspace { grid-template-columns: minmax(0, 1fr); gap: 32px; padding: 32px 20px; }
+  h1 { font-size: 30px; }
+  .circles { border-left: 0; border-top: 1px solid var(--line); padding: 24px 0; }
+}

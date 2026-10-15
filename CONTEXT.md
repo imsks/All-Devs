@@ -4,7 +4,7 @@
 
 The chosen product is **Build Circles**: a public idea forum with Tinder-like swipe discovery, creator-approved teams, and private real-time group chat. People swipe on ideas, not developer profiles. It is a collaboration product, not a dating app or commit leaderboard.
 
-Updated: 2026-10-15. This is the consolidated product reference, not permission to start development. The launch city/community will be decided later. See [README.md](README.md) for the combined product and technical plan.
+Updated: 2026-10-15. Architecture questions are closed and the user has requested feature planning, toolchain setup, and progression toward beta. A local foundation now exists, but product features and live beta are not ready. The launch city/community will be decided later. See [README.md](README.md) for the delivery plan, verified setup, and release gates.
 
 **How to read this document:** Agreed rules are recorded below. Sections labeled Recommended or To Decide are not approved requirements.
 
@@ -72,6 +72,7 @@ Commenting does not send a request or grant membership. Public discussion and pr
 - Chat is private circle coordination and free in beta. It is not the premium feature.
 - Circles can choose an external workspace instead; the external provider has its own terms, costs, and permissions.
 - Member removal, message history, retention, export, and moderation require explicit policies before launch.
+- Connected access must be revoked through explicit invalidation with a fallback stale-access target of at most 60 seconds. The local freshness helper is tested; actual chat enforcement and failure recovery are not implemented or verified yet. This is not a requirement to sign in every minute.
 
 **Recommended Beta Scope:** text-first chat with bounded message size, room size, usage, and retention. Attachments, typing indicators, presence, read receipts, push notifications, DMs, and voice/video are not approved features.
 
@@ -123,9 +124,9 @@ Supporting measurements: published ideas, useful discussions, requests sent and 
 | Profile/request/link visibility, search-engine indexing, and contact permissions | Not decided |
 | Validation targets, supported workload, and beta-exit criteria | Not decided |
 | Future premium price and packaging | Post-beta; not decided |
-| Implementation stack, delivery plan, and test approval | Proposed in README; not approved |
+| Implementation and delivery | Stack selected; phased beta plan and local foundation in README. Feature workflows, policy checks, and release readiness remain incomplete |
 
-These gaps do not prevent organizing the documentation. They are not silently filled in or treated as permission to develop or launch.
+These gaps do not block local foundation setup. Record any working defaults explicitly and resolve safety/capacity/privacy gates before live beta; do not claim launch readiness from scaffolding alone.
 
 ## Product Language
 
