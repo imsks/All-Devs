@@ -11,7 +11,7 @@
     "dev:web": "npm run dev --workspace @alldevs/web",
     "dev:api": "npm run dev --workspace @alldevs/api",
     "lint": "eslint apps/api/src packages/contracts/src tests && npm run lint --workspace @alldevs/web",
-    "typecheck": "npm run typecheck --workspaces --if-present",
+    "typecheck": "tsc --noEmit && npm run typecheck --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
     "test:e2e": "playwright test",
     "build": "npm run build --workspace @alldevs/api && npm run build --workspace @alldevs/web",
